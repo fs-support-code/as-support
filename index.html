@@ -1,0 +1,214 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a1a; overflow-x: hidden; }
+  .page-wrap { max-width: 900px; margin: 0 auto; }
+
+  /* ANIMATIONS */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .anim-title {
+    animation: slideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .anim-sub {
+    opacity: 0;
+    animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+  }
+  .anim-body {
+    opacity: 0;
+    animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+  }
+
+  /* HERO */
+  .hero { padding: 80px 32px 52px; border-bottom: none; }
+  .hero h1 {
+    font-size: 50px; font-weight: 700; line-height: 1.3;
+    color: #1a1a1a; margin-bottom: 30px; letter-spacing: -0.6px;
+  }
+  .hero p { font-size: 15px; color: #444; line-height: 1.85; max-width: 700px; }
+  .hero mark {
+    background:linear-gradient(to right, rgba(226, 255, 105, 0.7) 0%, rgba(226, 255, 105, 0.7) 0%);
+    padding: 0 3px; border-radius: 3px;
+    font-style: normal;
+  }
+
+  /* BUTTON */
+  .cta-wrap { margin-top: 50px; }
+  .cta-btn {
+    display: inline-block; padding: 16px 32px;
+    background: #a6e200; color: #fafafa;
+    font-size: 18px; font-weight: 500;
+    border-radius: 999px; border: none;
+    text-decoration: none; font-family: inherit;
+    cursor: pointer; white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cta-btn:hover { background: #fafafa; color: #232527; }
+
+  /* STEPS */
+  .steps { padding: 30px 32px 40px;  margin: 0 auto; background: #f9fafb; }
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .step { text-align: center; position: relative; padding: 0 8px; }
+  .step-num { width: 80px; height: 80px; border-radius: 50%; border: 0.5px solid #e0e0e0; background: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 20px; font-weight: 600; color: #232527; }
+  .step-label { font-size: 15px; font-weight: 600; color: #232527; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: #9ca3af; line-height: 1.5; }
+
+  /* INFO BAR */
+  .info-bar { background: #f9fafb; padding: 20px 32px 40px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+  .info-item { display: flex; align-items: center; gap: 8px; font-size: 15px; color: #555; }
+  .info-dot { width: 8px; height: 8px; border-radius: 50%; background: #a6e200; flex-shrink: 0; }
+
+  /* FAQ */
+  .faq-section { padding: 4rem 32px 3rem; }
+  .faq-title { font-size: 53px; font-weight: 700; color: #1a1a1a; margin-bottom: 3rem; line-height: 1.2;  }
+  .faq-list { display: flex; flex-direction: column; border-top: 1px solid #e8e8e8; }
+  details { border-bottom: 1px solid #e8e8e8; }
+  details[open] { border-bottom: none; }
+  summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; cursor: pointer; font-size: 18px; font-weight: 400; color: #1a1a1a; text-align: left; font-family: inherit; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: #555; }
+  .faq-icon { width: 24px; height: 24px; flex-shrink: 0; transition: transform 0.3s ease; color: #888; }
+  details[open] .faq-icon { transform: rotate(180deg); }
+  .faq-answer { overflow: hidden; }
+  .faq-answer-inner { position: relative; background: #EEEEEE; border-radius: 0px 16px 16px 16px; padding: 1rem 1.25rem; font-size: 15px; color: #1a1a1a; line-height: 1.7; margin-bottom: 2rem; }
+  .faq-answer-inner::before { content: ''; position: absolute; top: -10px; left: 50px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid #EEEEEE; }
+
+  /* NOTICE */
+  .notice-bar { padding: 0 32px 48px;text-align: center; }
+  .notice-box { max-width: 400px; margin: 0 auto; padding: 14px 18px; }
+  .notice-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+  .notice-text { font-size: 13px; color: #232527; line-height: 1.7; }
+  .notice-text strong { color: #232527; font-weight: 500;}
+
+.nav-back { 
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 14px; font-weight: 500; color: #1a1a1a;
+  background: #f5f5f3; border-radius: 999px;
+  padding: 10px 20px; text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.nav-back:hover { background: #e8e8e8; }
+.nav-back:active { background: #e0e0e0; transform: scale(0.97); }
+
+  @media (max-width: 768px) {
+    /* NAV */
+    .nav-back { padding: 8px 14px; font-size: 13px; }
+
+    /* HERO */
+    .hero { padding: 48px 32px 36px; }
+    .hero h1 { font-size: 28px; letter-spacing: -0.3px; margin-bottom: 20px; }
+    .hero p { font-size: 14px; }
+
+    /* STEPS */
+    .steps { padding: 28px 32px 28px; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+    .step::after { display: none; }
+    .step-num { width: 56px; height: 56px; font-size: 16px; }
+    .step-label { font-size: 13px; }
+    .step-desc { font-size: 12px; }
+
+    /* INFO BAR */
+    .info-bar { padding: 20px 32px 28px; gap: 12px; flex-direction: column; align-items: flex-start; }
+    .info-item { font-size: 13px; }
+
+    /* FAQ */
+    .faq-section { padding: 2.5rem 32px 2rem; }
+    .faq-title { font-size: 32px; margin-bottom: 1.5rem; }
+    summary { font-size: 15px; padding: 1rem 0; }
+    .faq-answer-inner { font-size: 14px; }
+
+    /* BUTTON */
+    .cta-btn { width: 100%; text-align: center; font-size: 16px; padding: 16px 24px; }
+    div[style*="text-align:center"] { padding-left: 20px !important; padding-right: 20px !important; }
+
+    /* NOTICE */
+    .notice-bar { padding: 0 32px 40px; }
+    .notice-box { max-width: 100%; }
+    .notice-text { font-size: 12px; }
+  }
+</style>
+<div style="display:flex; align-items:center; justify-content:space-between; padding:16px 32px; border-bottom:1px solid #e8e8e8; max-width:900px; margin:0 auto;">
+  <span style="font-size:14px; font-weight:600; color:#1a1a1a;">청우펀스테이션 지원센터</span>
+  <a class="nav-back" href="https://www.cwfuns.com" target="_top">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    회사 웹사이트
+  </a>
+</div>
+<div class="page-wrap">
+  <!-- HERO -->
+  <div class="hero">
+    <div style="font-size:14px; font-weight:600; color:#a6e200; text-transform:uppercase; margin-bottom:16px; animation: slideUp 0.5s ease both;">고객지원</div>
+    <h1 class="anim-title">안녕하세요,<br>청우펀스테이션 A/S 지원센터입니다.</h1>
+    <p class="anim-sub">
+      저희 시설물 관련 지원이 필요하시면 <mark>페이지 하단의 'A/S 접수하기'</mark>로 신청서를 작성해주세요.<br>
+      온라인 신청서로 접수해주시면 이력 관리가 용이하여 더욱 신속하고 정확한 처리가 가능합니다.
+    </p>
+  </div>
+
+  <!-- STEPS + INFO + FAQ + NOTICE -->
+  <div class="anim-body">
+    <div class="steps">
+      <div class="steps-grid">
+        <div class="step"><div class="step-num">1</div><div class="step-label">온라인 접수</div><div class="step-desc">신청서 작성<br>사진 첨부</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-label">담당자 확인</div><div class="step-desc">내용 검토 후<br>유선 연락</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-label">현장 점검</div><div class="step-desc">방문 일정<br>협의·조율</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-label">처리 완료</div><div class="step-desc">수리 완료 후<br>결과 안내</div></div>
+      </div>
+    </div>
+
+    <div class="info-bar">
+      <div class="info-item"><div class="info-dot"></div> 운영시간 평일 10:00 – 16:00</div>
+      <div class="info-item"><div class="info-dot"></div> 주말·공휴일 휴무</div>
+      <div class="info-item"><div class="info-dot"></div> 접수 후 순차 처리 (1–3 영업일)</div>
+    </div>
+
+    <section class="faq-section">
+      <h2 class="faq-title">FAQ</h2>
+      <div class="faq-list">
+        <details>
+          <summary><span>A/S 접수 후 얼마나 걸리나요?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">접수 후 담당자 확인까지 1–2 영업일이 소요됩니다. 현장 방문 일정은 유선으로 협의 후 결정되며, 상황에 따라 다소 달라질 수 있습니다.</div></div>
+        </details>
+        <details>
+          <summary><span>사진은 꼭 첨부해야 하나요?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">필수는 아니지만, 사진이 있으면 담당자가 상황을 정확히 파악할 수 있어 처리 속도가 빨라집니다. 가능하면 꼭 첨부해 주세요.</div></div>
+        </details>
+        <details>
+          <summary><span>운영시간 외에 접수해도 되나요?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">온라인 접수는 24시간 가능합니다. 다만 담당자 확인 및 유선 연락은 평일 10:00–16:00에 이루어집니다.</div></div>
+        </details>
+        <details>
+          <summary><span>A/S 비용이 발생하나요?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">품질 보증 기간 내의 하자는 무상으로 처리됩니다. 보증 기간 외 또는 외부 충격·파손 등의 경우 비용이 발생할 수 있으며, 처리 전 사전에 안내드립니다.</div></div>
+        </details>
+        <details>
+          <summary><span>접수 내용을 수정하거나 취소할 수 있나요?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></summary>
+          <div class="faq-answer"><div class="faq-answer-inner">접수 후 수정이나 취소가 필요하시면 운영시간 내 유선으로 연락 주시기 바랍니다. 담당자가 빠르게 처리해 드립니다.</div></div>
+        </details>
+      </div>
+    </section>
+
+    <div style="text-align:center; padding: 0 32px 20px;">
+      <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfS-TIO72KErUBuozavRzEWX4-5AqkQBD_5gm87RlaI01ITSw/viewform" target="_top">A/S 접수하기 →</a>
+    </div>
+
+    <div class="notice-bar">
+      <div class="notice-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#a6e200" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"></circle>
+  <line x1="12" y1="8" x2="12" y2="12"></line>
+  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+</svg>
+        <div class="notice-text"><strong>필독 안내</strong> 정확한 문제 파악을 위해 접수 시 <strong>문제 부분의 사진</strong>을 꼭 첨부해 주세요. 사진이 없을 경우 처리가 지연될 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
