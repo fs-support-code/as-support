@@ -32,10 +32,13 @@
   input[type=text], input[type=tel], input[type=email], input[type=date], textarea {
     width: 100%; padding: 11px 14px;
     border: 1px solid #e0e0e0; border-radius: 10px;
-    font-size: 14px; color: #1a1a1a; background: #fff;
+    font-size: 16px; color: #1a1a1a; background: #fff;
     font-family: inherit; outline: none;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
+input[type=date]:not([value]) { color: #999; }
+input[type=date] { color: #1a1a1a; }
+
   input:focus, textarea:focus {
     border-color: #5f5f5f;
     box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
