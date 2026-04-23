@@ -1,0 +1,262 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f5f5f3; color: #1a1a1a; padding: 50px 20px 60px; }
+
+  .wrap { max-width: 620px; margin: 0 auto; }
+
+  .form-header { margin-bottom: 32px; }
+  .form-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .form-header p { font-size: 15px; color: #666; line-height: 1.7; }
+  .required-note { font-size: 12px;  margin-bottom: 24px; color: #e53935; }
+
+  .card { background: #fff; border-radius: 16px; padding: 28px; margin-bottom: 16px; }
+  .card-title { font-size: 12px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
+
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 6px; }
+  label .req { color: #e53935; margin-left: 2px; }
+  .helper { font-size: 12px; color: #999; margin-top: 4px; line-height: 1.5; }
+
+  input[type=text], input[type=tel], input[type=email], input[type=date], textarea {
+    width: 100%; padding: 11px 14px;
+    border: 1px solid #e0e0e0; border-radius: 10px;
+    font-size: 14px; color: #1a1a1a; background: #fff;
+    font-family: inherit; outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus, textarea:focus {
+    border-color: #5f5f5f;
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
+  }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+  .checkbox-group, .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .check-item, .radio-item {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; padding: 10px 12px;
+    border: 1px solid #e0e0e0; border-radius: 8px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .check-item:hover, .radio-item:hover { border-color: #5f5f5f; background: #f0f0f0; }
+  .check-item input, .radio-item input { width: 16px; height: 16px; accent-color: #eeeeee; cursor: pointer; flex-shrink: 0; }
+  .check-item span, .radio-item span { font-size: 14px; color: #232527; }
+.check-item:has(input:checked), .radio-item:has(input:checked) {
+  border-color: #1a1a1a;
+  background: #f0f0f0;
+}
+input[type=radio], input[type=checkbox] {
+  appearance: none;
+  width: 16px; height: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+input[type=radio]:checked, input[type=checkbox]:checked {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpolyline points='1,4 4,7 9,1' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+  .notice { background: #f6ffde; border: 1px solid #a6e200; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #232527; line-height: 1.8; margin-bottom: 16px; }
+  .notice strong { color: #232527; }
+
+  .privacy-box { background: #f9fafb; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #555; line-height: 1.9; margin-bottom: 16px; }
+
+  .submit-btn {
+    width: 100%; padding: 16px;
+    background: #a6e200; color: #232527;
+    font-size: 16px; font-weight: 600;
+    border: none; border-radius: 999px;
+    font-family: inherit; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+  .submit-btn:hover { background: #fafafa;color: #232527; }
+  .submit-btn:active { transform: scale(0.98); }
+
+  /* 제출 완료 화면 */
+  .success { display: none; text-align: center; padding: 60px 20px; }
+  .success-icon { font-size: 48px; margin-bottom: 16px; }
+  .success h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .success p { font-size: 14px; color: #666; line-height: 1.7;margin-bottom: 50px; }
+.back-btn { background: #ebebeb; color: #1a1a1a; transition: background 0.15s, transform 0.1s; }
+.back-btn:hover { background: #d4d4d4; }
+.back-btn:active { transform: scale(0.97); }
+  @media (max-width: 480px) {
+    body { padding: 24px 16px 48px; }
+    .card { padding: 20px; }
+    .form-header h1 { font-size: 22px; }
+  }
+</style>
+
+<div class="wrap">
+  <!-- 제출 완료 화면 -->
+  <div class="success" id="successMsg">
+    <img src="https://244389656.fs1.hubspotusercontent-na2.net/hubfs/244389656/%EC%83%9D%EC%84%B1%EC%9D%B4%EB%AF%B8%EC%A7%80/%ED%8F%BC%EC%A0%9C%EC%B6%9C%20%EC%99%84%EB%A3%8C%20%EC%95%84%EC%9D%B4%EC%BD%98.png" style="width:60px;margin-bottom:1rem;">
+    <h2>접수가 완료되었습니다!</h2>
+    <p>담당자 확인 후 순차적으로 연락드릴 예정입니다.<br>평일 운영시간 10:00 – 16:00 내에 연락드립니다.</p>
+    <a class="back-btn" a href="https://www.cwfuns.com" target="_top" style="display:inline-block; margin-top:24px; padding:12px 28px; background:#1a1a1a; color:#fff; font-size:14px; font-weight:500; border-radius:999px; text-decoration:none;">회사 웹사이트로 돌아가기</a>
+  </div>
+
+  <!-- 폼 -->
+  <div id="formWrap">
+    <div class="form-header">
+      <h1>A/S 접수 신청서</h1>
+      <p>접수된 내용은 담당자 확인 후 순차적으로 연락드릴 예정입니다.</p>
+    </div>
+    <p class="required-note">* 표시는 필수 입력 항목입니다.</p>
+
+    <form id="asForm">
+
+      <!-- 신청인 정보 -->
+      <div class="card">
+        <div class="card-title">신청인 정보</div>
+
+        <div class="field">
+          <label>신청인 / 단체명 <span class="req">*</span></label>
+          <input type="text" name="entry.1870205084" required placeholder="홍길동 / OO아파트 관리사무소">
+        </div>
+
+        <div class="field">
+          <label>연락처 (휴대폰 번호) <span class="req">*</span></label>
+          <input type="tel" name="entry.85334117" required placeholder="01012345678">
+          <p class="helper">'-' 없이 숫자만 입력해주세요. (예: 01012345678)</p>
+        </div>
+
+        <div class="field">
+          <label>이메일</label>
+          <input type="email" name="entry.1461906702" placeholder="example@email.com">
+          <p class="helper">처리 결과나 관련 자료를 받으실 경우 입력해주세요.</p>
+        </div>
+      </div>
+
+      <!-- 현장 정보 -->
+      <div class="card">
+        <div class="card-title">설치 정보 (현장 정보)</div>
+
+        <div class="field">
+          <label>현장명 <span class="req">*</span></label>
+          <input type="text" name="entry.1011507559" required placeholder="예) OO아파트, OO 어린이공원, OO 유치원">
+        </div>
+
+        <div class="field">
+          <label>현장 주소 <span class="req">*</span></label>
+          <textarea name="entry.633299984" required placeholder="예) OO시 OO동 OO번지 OO아파트 105동 앞" rows="2"></textarea>
+          <p class="helper">A/S 기사님이 방문하실 정확한 주소를 입력해주세요.</p>
+        </div>
+
+        <div class="field">
+          <label>설치된 제품 <span class="req">*</span></label>
+          <p class="helper" style="margin-bottom:10px;">보수 및 부품이 필요한 제품을 모두 선택해주세요.</p>
+          <div class="checkbox-group">
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="조합놀이대"><span>조합놀이대</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="그네"><span>그네</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="시소"><span>시소</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="벤치"><span>벤치</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="운동기구"><span>운동기구</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="기타놀이기구"><span>기타놀이기구</span></label>
+            <label class="check-item"><input type="checkbox" name="entry.1896203508" value="기타"><span>기타</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>설치시기 / 준공일자 <span class="req">*</span></label>
+          <input type="date" name="entry.666400447" required>
+          <p class="helper">기억나지 않으시면 오늘 날짜를 선택해주세요.</p>
+        </div>
+      </div>
+
+      <!-- A/S 요청 내용 -->
+      <div class="card">
+        <div class="card-title">A/S 요청 내용</div>
+
+        <div class="field">
+          <label>문제 부분 <span class="req">*</span></label>
+          <input type="text" name="entry.1507683879" required placeholder="예) 그네 연결 부속 파손, 벤치 목재 갈라짐">
+        </div>
+
+        <div class="field">
+          <label>상세 설명 <span class="req">*</span></label>
+          <textarea name="entry.1075238301" required placeholder="문제 상황을 자세히 적어주시면 더 빠른 처리에 도움이 됩니다."></textarea>
+        </div>
+
+        <div class="notice">
+           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a6e200" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"></circle>
+  <line x1="12" y1="8" x2="12" y2="12"></line>
+  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+</svg>
+          <strong>사진 접수 안내</strong><br>
+          정확한 A/S 처리를 위해 문제 부분의 사진을 아래로 꼭 보내주세요.<br>
+          · 문자: <strong>010-6779-7006</strong><br>
+          · 이메일: <strong>support@cwfuns.com</strong><br>
+          <small>사진 전송 시 신청서의 '현장명' 또는 '신청인명'을 함께 알려주세요.</small>
+        </div>
+
+        <div class="field">
+          <label>사진 접수 확인 <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="entry.850922710" value="사진을 위 연락처로 발송하였습니다." required><span>사진을 위 연락처로 발송하였습니다.</span></label>
+            <label class="radio-item"><input type="radio" name="entry.850922710" value="사진이 필요 없는 요청입니다."><span>사진이 필요 없는 요청입니다.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 개인정보 동의 -->
+      <div class="card">
+        <div class="card-title">개인정보 수집 및 이용 동의</div>
+        <div class="privacy-box">
+          1. 수집항목: 신청인명, 연락처, 이메일, 주소<br>
+          2. 수집 및 이용 목적: A/S 접수 및 처리, 이력 관리, 고객 상담<br>
+          3. 보유 및 이용 기간: A/S 처리 완료 후 3년 (관련 법령에 따름)
+        </div>
+        <label class="check-item">
+          <input type="checkbox" name="entry.923549149" value="동의합니다." required>
+          <span>위 내용에 동의합니다. <span class="req">*</span></span>
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn">접수하기 →</button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById('asForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  var form = e.target;
+  var data = new FormData(form);
+  var params = new URLSearchParams();
+
+  for (var pair of data.entries()) {
+    params.append(pair[0], pair[1]);
+  }
+
+  params.append('fvv', '1');
+  params.append('fbzx', Date.now().toString());
+
+  fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSfS-TIO72KErUBuozavRzEWX4-5AqkQBD_5gm87RlaI01lTSw/formResponse', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  }).then(function() {
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    window.scrollTo(0, 0);
+  }).catch(function() {
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    window.scrollTo(0, 0);
+  });
+});
+</script>
