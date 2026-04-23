@@ -242,6 +242,7 @@ document.getElementById('asForm').addEventListener('submit', function(e) {
   }
 
   params.append('fvv', '1');
+  params.append('pageHistory', '0,1,2'); 
   params.append('fbzx', Date.now().toString());
 
   fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSfS-TIO72KErUBuozavRzEWX4-5AqkQBD_5gm87RlaI01lTSw/formResponse', {
